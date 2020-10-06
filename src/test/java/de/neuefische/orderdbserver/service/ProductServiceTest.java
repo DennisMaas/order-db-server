@@ -18,7 +18,7 @@ class ProductServiceTest {
     private final ProductService productService = new ProductService(productDb);
 
     @Test
-    void listProducts() {
+    void listProductsForRequestParamNullShouldReturnProductList() {
         //GIVEN
         List<Product> productList = new ArrayList<>(List.of(
                 new Product ("SomeName", "SomeString", 23, 2),
@@ -38,4 +38,23 @@ class ProductServiceTest {
     }
 
     @Test
+    void listProducts() {
+        //GIVEN
+        List<Product> productList = new ArrayList<>(List.of(
+                new Product ("SomeName", "SomeString", 23, 2),
+                new Product ("SomeName2", "SomeString2", 232, 22)));
+
+        String q = null;
+
+        when(productService.listProducts(q)).thenReturn(productList);
+
+        //WHEN
+        List<Product> actualList = productService.listProducts(q);
+
+        //THEN
+        assertThat(actualList, is(new ArrayList<>(List.of(
+                new Product ("SomeName", "SomeString", 23, 2),
+                new Product ("SomeName2", "SomeString2", 232, 22)))));
+    }
+
 }
