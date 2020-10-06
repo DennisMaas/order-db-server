@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,4 +39,16 @@ class ProductControllerTest {
         )));
     }
 
+    @Test
+    public void addProductShouldAddProductToDb(){
+        //GIVEN
+        Product product = new Product("Zwiebel", "123",50,60);
+        when(service.addProduct(product)).thenReturn(product);
+
+        //WHEN
+        Product actualProduct = productController.addProduct(product);
+
+        //THEN
+        assertThat(actualProduct, is(new Product("Zwiebel", "123",50,60)));
+    }
 }
