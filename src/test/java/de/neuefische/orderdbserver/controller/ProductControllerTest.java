@@ -51,4 +51,5 @@ class ProductControllerTest {
         //THEN
         assertThat(actualProduct, is(new Product("Zwiebel", "123",50,60)));
     }
+
 }

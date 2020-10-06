@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 class ProductDbTest {
 
-    @Test
+    /*@Test
     public void getByIdShouldReturnMatchingProduct(){
         //Given
         ProductDb productDb = new ProductDb();
@@ -19,6 +19,6 @@ class ProductDbTest {
 
         //Then
         assertThat(tomate.get(),is(new Product( tomate, tomateId, 249,1000)));
-    }
+    }*/
 
-}*/
+}
