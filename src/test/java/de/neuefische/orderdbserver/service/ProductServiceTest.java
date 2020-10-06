@@ -9,8 +9,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ProductServiceTest {
 
@@ -38,13 +37,13 @@ class ProductServiceTest {
     }
 
     @Test
-    void listProducts() {
+    void listProductsForRequestParamBlankShouldReturnProductList() {
         //GIVEN
         List<Product> productList = new ArrayList<>(List.of(
                 new Product ("SomeName", "SomeString", 23, 2),
                 new Product ("SomeName2", "SomeString2", 232, 22)));
 
-        String q = null;
+        String q = " ";
 
         when(productService.listProducts(q)).thenReturn(productList);
 
@@ -56,5 +55,25 @@ class ProductServiceTest {
                 new Product ("SomeName", "SomeString", 23, 2),
                 new Product ("SomeName2", "SomeString2", 232, 22)))));
     }
+
+    @Test
+    void listProductsForRequestParamShouldVerifySearch() {
+        //GIVEN
+        List<Product> productList = new ArrayList<>(List.of(
+                new Product ("OtherName", "SomeString", 23, 2),
+                new Product ("SomeName2", "SomeString2", 232, 22)));
+
+        String q = "OtherName";
+
+        when(productService.listProducts(q)).thenReturn(productList);
+
+        //WHEN
+        List<Product> actualList = productService.listProducts(q);
+
+        //THEN
+        verify(productDb).searchProducts(q);
+    }
+
+
 
 }
