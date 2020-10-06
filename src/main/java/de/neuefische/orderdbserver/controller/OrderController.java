@@ -1,10 +1,10 @@
 package de.neuefische.orderdbserver.controller;
 
 import de.neuefische.orderdbserver.model.Order;
+import de.neuefische.orderdbserver.model.Product;
 import de.neuefische.orderdbserver.service.OrderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -16,7 +16,11 @@ public class OrderController {
         this.service = service;
     }
     @GetMapping
-    public List<Order> getAllOrders() {
-        return service.listOrders();
+    public List<Order> getAllOrders(@RequestParam(required = false)String q) {
+        return service.searchOrder(q);
+    }
+    @PutMapping
+    public Order addOrder(@RequestBody Order order){
+        return service.addOrder(order);
     }
 }

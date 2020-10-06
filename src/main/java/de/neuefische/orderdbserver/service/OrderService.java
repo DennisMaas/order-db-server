@@ -12,8 +12,18 @@ public class OrderService {
     @Autowired
     public OrderService(OrderDb orderDb){
         this.orderDb = orderDb;
+
     }
-    public List<Order> listOrders(){
-        return orderDb.listOrders();
+
+    public List<Order> searchOrder(String q) {
+        if (q == null || q.isBlank()) {
+            return orderDb.listOrders();
+
+        }
+        return orderDb.searchOrder(q);
+    }
+
+    public Order addOrder(Order order) {
+        return orderDb.addOrder(order);
     }
 }

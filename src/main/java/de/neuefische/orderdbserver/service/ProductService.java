@@ -16,8 +16,15 @@ public class ProductService {
         this.productDb = productDb;
     }
 
-    public List<Product> listProducts(){
-        return productDb.listProducts();
+    public List<Product> listProducts(String q){
+        if (q == null || q.isBlank()) {
+            return productDb.listProducts();
+        }
+        return productDb.searchProducts(q);
 
+    }
+
+    public Product addProduct(Product product) {
+        return productDb.addProduct(product);
     }
 }
