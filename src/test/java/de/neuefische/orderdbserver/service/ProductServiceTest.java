@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
@@ -60,20 +61,49 @@ class ProductServiceTest {
     void listProductsForRequestParamShouldVerifySearch() {
         //GIVEN
         List<Product> productList = new ArrayList<>(List.of(
-                new Product ("OtherName", "SomeString", 23, 2),
+                new Product ("Lappen", "SomeString", 23, 2),
                 new Product ("SomeName2", "SomeString2", 232, 22)));
 
-        String q = "OtherName";
+        String q = "SomeName";
 
-        when(productService.listProducts(q)).thenReturn(productList);
+        when(productDb.searchProducts(q)).thenReturn(productList);
 
         //WHEN
         List<Product> actualList = productService.listProducts(q);
 
         //THEN
+        assertThat(actualList, containsInAnyOrder(
+                new Product ("Lappen", "SomeString", 23, 2),
+                new Product ("SomeName2", "SomeString2", 232, 22)));
+
         verify(productDb).searchProducts(q);
     }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
