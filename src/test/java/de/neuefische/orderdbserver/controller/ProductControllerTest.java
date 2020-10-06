@@ -4,11 +4,13 @@ import de.neuefische.orderdbserver.model.Product;
 import de.neuefische.orderdbserver.service.ProductService;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.List;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProductControllerTest {
 
@@ -16,22 +18,23 @@ class ProductControllerTest {
     private final ProductController productController = new ProductController(service);
 
     @Test
-    public void getProductByIdShouldReturnMatchingProduct(){
+    public void getProductByNameShouldReturnMatchingProduct(){
         //GIVEN
-        String productId = "some-product-Id";
+        String productName = "some-product-Name";
 
-        Optional<Product> returnValue = Optional.of(new Product(
-                productId,
-                        "some Product name"
+        List<Product> returnValue = List.of(new Product(
+                productName,
+                        "some Product name", 20, 200
         ));
+        when(service.listProducts(productName)).thenReturn(returnValue);
 
         //WHEN
-        Product product = productController.getAllProducts(productId);
+        List<Product> products = productController.getAllProducts(productName);
 
         //THEN
-        assertThat(product, is(new Product(
-                productId,
-                    "some Product name"
+        assertThat(products, containsInAnyOrder(new Product(
+                productName,
+                    "some Product name", 20, 200
         )));
     }
 
